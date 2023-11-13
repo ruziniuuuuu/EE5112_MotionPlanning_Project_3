@@ -36,5 +36,5 @@ for k=1:nJoints
     T_temp = T{k};
     X(k,:) = [T_temp(1:3, 4)' 1];
 end
-    
+
 end

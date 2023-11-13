@@ -18,19 +18,22 @@ theta_paths = cell(1, nSamplePaths);
 mu=zeros(1,length(sigma));
 
 %% TODO: complete code of independent sampling for each joint
-for m = 1 : nJoints
+for m = 1:nJoints
     % Each joint is sampled independently.
     % The starting q0 and final qT are fixed, so set the sample to 0.
     % Sample from multivariable Gaussian distribution
-   noise=mvnrnd(mu,Rinv);
-   noise=[0;noise;0];
-   em{m}=noise;
+    noisePaths = [];
+    for i = 1:nSamplePaths
+        noise = mvnrnd(mu, eye(length(sigma)));
+        noise = [0, noise, 0];
+        noisePaths = [noisePaths; noise];
+    end
+    em{m} = noisePaths;
 end
 
 %% Regroup it by samples
 emk = [em{:}];
 for k=1:nSamplePaths
-    ek{k} = reshape(emk(k,:),nDiscretize, nJoints)';
+    ek{k} = reshape(emk(k,:), nDiscretize, nJoints)';
     theta_paths{k} = theta + ek{k};
-    
 end
