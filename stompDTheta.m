@@ -18,13 +18,14 @@ for joint = 1:nJoints
         for sample = 1:size(em{joint}, 1)
             % Compute the difference between the current trajectory probability
             % and the sampled trajectory probability
-            diff_prob = trajProb(sample, t) - em{joint}(sample, t);
-            
+            %diff_prob = trajProb(sample, t) - em{joint}(sample, t);
+            diff_prob = trajProb(sample, t);
             % Accumulate the gradient contribution from each sample
             gradient_sum = gradient_sum + diff_prob * em{joint}(sample, t);
         end
         
         % Update the gradient for the current joint and time step
-        dtheta(joint, t) = gradient_sum / size(em{joint}, 1);
+        %dtheta(joint, t) = gradient_sum / size(em{joint}, 1);
+        dtheta(joint, t) = gradient_sum;
     end
 end

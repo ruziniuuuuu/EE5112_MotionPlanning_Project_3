@@ -46,8 +46,8 @@ for i = 2 : nDiscretize
 end
 
 %% Local trajectory cost: you need to specify the relative weights between different costs
-Stheta = 1000*qo_cost + qc_cost;
-
+%Stheta = 1000*qo_cost + qc_cost;
+Stheta = 1*qo_cost + qc_cost;
 % sum over time and add the smoothness cost
 theta = theta(:, 2:end-1);
 Qtheta = sum(Stheta) + 1/2 * sum(theta * R * theta', "all");
