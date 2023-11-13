@@ -26,9 +26,9 @@ aObs.Pose = trvec2tform(box_center);
 world = {aObs}; % try adding more static obstacles aObs to dObs or create your own
 
 %% Visulaization the obstacle
-% for i=1: length(world)
-%     show(world{i})
-% end
+for i=1:length(world)
+    show(world{i});
+end
 
 %% voxelize the box obstacles
 cube_metric = [box_center-lbox/2;
@@ -44,16 +44,15 @@ cube_voxel = [ceil((cube_metric(1, :)-Env_size(1,:))./voxel_size); ...
 % Set the corresponding voxel occupancy to 1, meaning occupied
 binary_world(sub2ind([Env_size(2, 1) / voxel_size(1), Env_size(2, 2) / voxel_size(2), Env_size(2, 3) / voxel_size(3)], xc, yc, zc)) = 1;
 
-% % plot the occupied voxel with a marker *
-% plot3(xc(:), yc(:), zc(:), '*');
-% % Or you can use the volumeViewer() from the Image Processing Toolbox to 
-% % display the voxel_world in 3D. 
+% plot the occupied voxel with a marker *
+plot3(xc(:), yc(:), zc(:), '.');
+% Or you can use the volumeViewer() from the Image Processing Toolbox to 
+% display the voxel_world in 3D. 
 % volumeViewer(voxel_world);
 
 %% construct signed Euclidean Distance for the voxel world
 % Only approximation if the voxel is not a cube
 voxel_world_sEDT = prod(voxel_size) ^ (1/3) * sEDT_3d(binary_world);
-
 
 voxel_world.voxel_size = voxel_size;
 voxel_world.voxel = binary_world;

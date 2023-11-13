@@ -1,4 +1,4 @@
-function cost = stompObstacleCost(sphere_centers,radius,voxel_world,vel)
+function cost = stompObstacleCost(sphere_centers, radius, voxel_world, vel)
 
 safety_margin = 0.05; % the safety margin distance, unit: meter
 cost = 0;
@@ -13,7 +13,13 @@ idx = ceil((sphere_centers-env_corner_vec)./voxel_world.voxel_size);
 
 %% TODO: complete the following code according to Eq (13) in the STOMP conference paper.
 try
-    cost_array =
+    [nSpheres, ~] = size(sphere_centers);
+    epsilon = mvnrnd(zeros(nSpheres, 1), 1);
+    d = zeros(nSpheres, 1);
+    for k = 1:nSpheres
+        d(k) = voxel_world_sEDT(idx(k, 1), idx(k, 2), idx(k, 3));
+    end
+    cost_array = max(epsilon + radius - d(k), 0).*vel;
     cost = sum(cost_array);
 catch  % for debugging
     idx = ceil((sphere_centers-env_corner_vec)./voxel_world.voxel_size);

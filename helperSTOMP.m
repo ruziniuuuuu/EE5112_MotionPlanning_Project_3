@@ -31,13 +31,12 @@ Rinv = inv(R);
 M = 1 / nDiscretize * Rinv ./ max(Rinv, [], 1); % normalized by each column, no longer symmetric
 Rinv = 1.5*Rinv/sum(sum(Rinv)); % normalized R inverse, so that the sample is still within the voxel world
 
-
 %%
 %Planner
 Q_time = [];   % Trajectory cost Q(theta), t-vector
 RAR_time = [];
-
-[~, Qtheta] = stompTrajCost(robot_struct, theta, R, voxel_world);
+%%
+[~, Qtheta] = stompTrajCost(robot_struct, theta, R, voxel_world, poseFinal);
 QthetaOld = 0;
 
 iter=0;
@@ -49,7 +48,7 @@ while abs(Qtheta - QthetaOld) > convergenceThreshold
     tic
     %% TODO: Complete the following code. The needed functions are already given or partially given in the folder.
     %% TODO: Sample noisy trajectories
-
+    
     %% TODO: Calculate Local trajectory cost for each sampled trajectory
     % variable declaration (holder for the cost):
     Stheta = zeros(nPaths, nDiscretize);
@@ -107,7 +106,6 @@ for i = 1:nDiscretize
 
 end
 isTrajectoryInCollision = any(inCollision)
-
 
 %% Plot training iteration process
 enableVideoTraining = 0;

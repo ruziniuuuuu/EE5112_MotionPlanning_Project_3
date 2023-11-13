@@ -1,7 +1,7 @@
 % Given a trajectory, calculate its cost
-function [Stheta, Qtheta] = stompTrajCost(robot_struct, theta,  R, voxel_world)
+function [Stheta, Qtheta] = stompTrajCost(robot_struct, theta, R, voxel_world, poseFinal)
 % Compute the local trajectory cost at each discretization theta point, as 
-% well as the overall trajecotry cost (the Qtheta)
+% well as the overall trajectory cost (the Qtheta)
 
 % Costi = stompCompute_Cost(robot, theta, Env);
 % Compute the cost of all discretized points on one trajectory
@@ -33,7 +33,16 @@ for i = 2 : nDiscretize
     qo_cost(i) = stompObstacleCost(sphere_centers,radi, voxel_world, vel);
     
     %% TODO: Define your qc_cost to add constraint on the end-effector
-    qc_cost = 0;
+    thetaCurrent = wrapToPi(theta(:, i));
+    theta_cell = num2cell(thetaCurrent);
+    tConfiguration= robot_struct.homeConfiguration;
+    [tConfiguration.JointPosition]= theta_cell{:};
+    TCurrent = getTransform(robot_struct, tConfiguration, robot_struct.BodyNames{8});
+    RCurrent = TCurrent(1:3, 1:3);
+    translationCurrent = TCurrent(1:3, 4);
+    eulerAnglesCurrent = rotm2eul(RCurrent)';
+    poseCurrent = [translationCurrent; eulerAnglesCurrent];
+    qc_cost(i) = sqrt(sum((poseFinal - poseCurrent) .^ 2));
 end
 
 %% Local trajectory cost: you need to specify the relative weights between different costs
