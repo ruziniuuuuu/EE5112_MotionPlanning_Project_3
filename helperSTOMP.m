@@ -48,20 +48,25 @@ while abs(Qtheta - QthetaOld) > convergenceThreshold
     tic
     %% TODO: Complete the following code. The needed functions are already given or partially given in the folder.
     %% TODO: Sample noisy trajectories
-    
+    [theta_paths, em]=stompSamples(nPaths,R,theta);
     %% TODO: Calculate Local trajectory cost for each sampled trajectory
     % variable declaration (holder for the cost):
     Stheta = zeros(nPaths, nDiscretize);
-
+    for i=1:nPaths
+        [stheta, qtheta] = stompTrajCost(robot_struct, theta_paths{i},  R, voxel_world);
+        Stheta(i,:)=stheta;
+    end
     
     %% TODO: Given the local traj cost, update local trajectory probability
 
-    
+    trajProb = stompUpdateProb(Stheta);
     %% TODO: Compute delta theta (aka gradient estimator, the improvement of the delta)
-
+    dtheta = stompDTheta(trajProb, em);
+    [theta, dtheta_smoothed] = stompUpdateTheta(theta, dtheta, M);
 
     %% TODO: Compute the cost of the new trajectory
- 
+    [~, Qtheta] = stompTrajCost(robot_struct, theta, R, voxel_world);
+    
     toc
 
     Q_time = [Q_time Qtheta];

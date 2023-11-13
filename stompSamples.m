@@ -22,7 +22,9 @@ for m = 1 : nJoints
     % Each joint is sampled independently.
     % The starting q0 and final qT are fixed, so set the sample to 0.
     % Sample from multivariable Gaussian distribution
-   
+   noise=mvnrnd(mu,Rinv);
+   noise=[0;noise;0];
+   em{m}=noise;
 end
 
 %% Regroup it by samples
