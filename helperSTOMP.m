@@ -112,6 +112,7 @@ end
 isTrajectoryInCollision = any(inCollision)
 
 %% Plot training iteration process
+% enableVideoTraining = 0;
 enableVideoTraining = 0;
 
 
@@ -147,7 +148,8 @@ close(v);
 
 
 %% Plot path
-enableVideo = 0;
+% enableVideo = 0;
+enableVideo = 1;
 if enableVideo == 1
     v = VideoWriter('KinvaGen3_wEEConY3.avi');
     v.FrameRate =2;
@@ -174,9 +176,6 @@ if displayAnimation
     end
 end
 
-
-
 %% save data
 filename = ['Theta_nDisc', num2str(nDiscretize),'_nPaths_', num2str(nPaths), '.mat'];
 save(filename,'theta')
-
