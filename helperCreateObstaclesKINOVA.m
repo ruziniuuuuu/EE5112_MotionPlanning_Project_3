@@ -19,8 +19,7 @@ binary_world = zeros(Env_size(2, 1) / voxel_size(1), Env_size(2, 2) / voxel_size
 lbox = 0.08*2; % length of the cube
 box_center = [0.4 0.46 0.26]; % (metric) world coordinates of the box center
 aObs = collisionBox(lbox,lbox,lbox);  
-aObs.Pose = trvec2tform(box_center);   
-
+aObs.Pose = trvec2tform(box_center);
 
 % Set static obstacles
 world = {aObs}; % try adding more static obstacles aObs to dObs or create your own

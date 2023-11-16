@@ -18,7 +18,8 @@ ax1 = show(robot, positions(:,1),'PreservePlot', false, 'Frames', 'off');
 view(150,29)
 hold on
 % set the x,y,z, data limits of the figure
-axis([-0.8 0.8 -0.6 0.7 -0.2 0.7]);
+% axis([-0.8 0.8 -0.6 0.7 -0.2 0.7]);
+axis([-2 2 -2 2 -2 2]);
 % plot the final position
 plot3(poseFinal(1), poseFinal(2), poseFinal(3),'r.','MarkerSize',20)
 

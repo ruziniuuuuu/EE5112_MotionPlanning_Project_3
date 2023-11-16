@@ -31,7 +31,7 @@ for k=1:nJoints
     % Use the Matlab built-in function getTransfrom to obtain the pose T
     % getTransform can only takes in structure array Configuration
     %% TODO:
-    T{k} = getTransform(robot_struct, tConfiguration, robot_struct.BodyNames{k});
+    T{k} = getTransform(robot_struct, tConfiguration, robot_struct.BodyNames{k+1});
     % Get joint's world coordinates
     T_temp = T{k};
     X(k,:) = [T_temp(1:3, 4)' 1];

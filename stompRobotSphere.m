@@ -28,7 +28,7 @@ for k=1:size(X,1)
     center_cell{k} = cell2mat(center_cell_k)';
     % radius of each sphere
     radi_cell{k} = rad*ones(size(center_cell{k},1),1);
-end    
+end
 
 centers = cell2mat(center_cell);
 radi = cell2mat(radi_cell);
